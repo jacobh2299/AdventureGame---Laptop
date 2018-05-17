@@ -21,8 +21,9 @@ public class AdventureGameController extends BasicGame {
 	TileBorder tileBorder = new TileBorder();
 
 	// Create DeathScreen
-	Image DeathScreen;
+	Image DeathScreen, StartScreen;
 	boolean drawDeathScreen;
+	boolean drawStartScreen;
 	boolean isTouching = false;
 	boolean isTouching1 = false;
 	boolean isTouching2 = false;
@@ -48,54 +49,71 @@ public class AdventureGameController extends BasicGame {
 	// Draw Images Here or Animations
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
-		// Creates the backGround color of the opening room
-		arg1.setColor(new Color(0, 100, 200));
-		// Creates the background object
-		arg1.fillRect(0, 0, 1000, 600);
 
-		// Creates Color of player as a box
-		arg1.setColor(Color.white);
-		// Creates player as a box [ fillRect(PX = player x position, PY = player y
-		// position, 30 = length, 30 = width) ]
-		arg1.fillRect(PX, PY, 30, 30);
-
-		// Creates Enemy1
-		arg1.setColor(Color.red);
-		arg1.fillRect(EX, EY, 50, 50);
-
-		// Creates Enemy2
-		arg1.setColor(Color.red);
-		arg1.fillRect(EX1, EY1, 50, 50);
-
-		//Create Enemy3
-		arg1.setColor(Color.red);
-		arg1.fillRect(EX2, EY2, 50, 50);
-		
-		if (drawDeathScreen == true) {
-			DeathScreen.draw(0, 0);
+		if (drawStartScreen = true) {
+			StartScreen.draw(0, 0);
 		}
+		if (drawStartScreen == false) {
+			// Creates the backGround color of the opening room
+			arg1.setColor(new Color(0, 100, 200));
+			// Creates the background object
+			arg1.fillRect(0, 0, 1000, 600);
 
-		// creates top border
-		tileBorder.border(arg1, 0, 0, 1000, 10);
-		// creates left border
-		tileBorder.border(arg1, 0, 0, 10, 600);
-		// creates right border
-		tileBorder.border(arg1, 990, 0, 10, 600);
-		// creates bottom border
-		tileBorder.border(arg1, 0, 590, 1000, 10);
+			// Creates Color of player as a box
+			arg1.setColor(Color.white);
+			// Creates player as a box [ fillRect(PX = player x position, PY = player y
+			// position, 30 = length, 30 = width) ]
+			arg1.fillRect(PX, PY, 30, 30);
 
+			// Creates Enemy1
+			arg1.setColor(Color.red);
+			arg1.fillRect(EX, EY, 50, 50);
+
+			// Creates Enemy2
+			arg1.setColor(Color.red);
+			arg1.fillRect(EX1, EY1, 50, 50);
+
+			// Create Enemy3
+			arg1.setColor(Color.red);
+			arg1.fillRect(EX2, EY2, 50, 50);
+
+			if (drawDeathScreen == true) {
+				DeathScreen.draw(0, 0);
+			}
+
+			// creates top border
+			tileBorder.border(arg1, 0, 0, 1000, 10);
+			// creates left border
+			tileBorder.border(arg1, 0, 0, 10, 600);
+			// creates right border
+			tileBorder.border(arg1, 990, 0, 10, 600);
+			// creates bottom border
+			tileBorder.border(arg1, 0, 590, 1000, 10);
+		}
 	}
 
 	// Initialize Images
 	@Override
 	public void init(GameContainer arg0) throws SlickException {
 		DeathScreen = new Image("res/DeathScreen.png");
+		StartScreen = new Image("res/StartScreen.png");
 	}
 
 	// Logic, Update, Actual Code (physics and gravity etc...)
 	@Override
 	public void update(GameContainer arg0, int arg1) throws SlickException {
+		// gets input from keyboard
+		Input input = arg0.getInput();
 
+		if(drawStartScreen == true)
+		{
+			if(input.isKeyDown(Input.KEY_ENTER))
+			{
+				drawStartScreen=false;
+			}
+		}
+		
+		
 		// Moves enemy
 		moveX(PX);
 		moveY(PY);
@@ -108,8 +126,7 @@ public class AdventureGameController extends BasicGame {
 		moveX2(PX);
 		moveY2(PY);
 		
-		// gets input from keyboard
-		Input input = arg0.getInput();
+		
 
 		// Makes hitBox for Enemy
 		if (PX + 25 > EX && PX < EX + 50 && PY + 25 > EY && PY < EY + 50) {
@@ -131,7 +148,7 @@ public class AdventureGameController extends BasicGame {
 		} else {
 			isTouching2 = false;
 		}
-
+		
 		// Moves Player
 		if (drawDeathScreen != true) {
 			if (input.isKeyDown(Input.KEY_LEFT)) {
@@ -149,9 +166,10 @@ public class AdventureGameController extends BasicGame {
 			if (input.isKeyDown(Input.KEY_DOWN)) {
 				PY += 7;
 			}
-
+			
+		
 		}
-
+		
 		// creates borders
 		PX = tileBorder.borderHitBoxX(PX);
 		PY = tileBorder.borderHitBoxY(PY);
@@ -183,6 +201,7 @@ public class AdventureGameController extends BasicGame {
 
 			}
 		}
+		
 
 	}
 
@@ -206,7 +225,8 @@ public class AdventureGameController extends BasicGame {
 		}
 		return EY;
 	}
-	//Moves Enemy1
+
+	// Moves Enemy1
 	public int moveX1(int PX) {
 		if (EX1 > PX) {
 			EX1 = EX1 - 2;
@@ -226,7 +246,8 @@ public class AdventureGameController extends BasicGame {
 		}
 		return EY1;
 	}
-	//Move Enemy2
+
+	// Move Enemy2
 	public int moveX2(int PX) {
 		if (EX2 > PX) {
 			EX2 = EX2 - 3;
@@ -246,5 +267,4 @@ public class AdventureGameController extends BasicGame {
 		}
 		return EY2;
 	}
-
 }
