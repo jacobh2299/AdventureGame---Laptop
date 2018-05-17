@@ -23,7 +23,7 @@ public class AdventureGameController extends BasicGame {
 	// Create DeathScreen
 	Image DeathScreen, StartScreen;
 	boolean drawDeathScreen;
-	boolean drawStartScreen;
+	boolean drawStartScreen = true;
 	boolean isTouching = false;
 	boolean isTouching1 = false;
 	boolean isTouching2 = false;
@@ -50,7 +50,7 @@ public class AdventureGameController extends BasicGame {
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
 
-		if (drawStartScreen = true) {
+		if (drawStartScreen == true) {
 			StartScreen.draw(0, 0);
 		}
 		if (drawStartScreen == false) {
@@ -113,7 +113,8 @@ public class AdventureGameController extends BasicGame {
 			}
 		}
 		
-		
+		if(drawStartScreen==false)
+		{
 		// Moves enemy
 		moveX(PX);
 		moveY(PY);
@@ -201,7 +202,7 @@ public class AdventureGameController extends BasicGame {
 
 			}
 		}
-		
+		}
 
 	}
 
