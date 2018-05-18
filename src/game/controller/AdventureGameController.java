@@ -15,7 +15,7 @@ public class AdventureGameController extends BasicGame {
 	// Initialize all of the data members
 
 	// Player
-	int PX = 270, PY = 270, EX = 0, EY = 0, EX1 = 930, EY1 = 50, EX2 = 500, EY2 = 500;
+	int PX = 270, PY = 270, EX = 0, EY = 0, EX1 = 930, EY1 = 50, EX2 = 500, EY2 = 500, EX3 = 60, EY3 = 560, EX4 = 40, EY4 = 40;
 
 	// Initialize Border
 	TileBorder tileBorder = new TileBorder();
@@ -23,10 +23,14 @@ public class AdventureGameController extends BasicGame {
 	// Create DeathScreen
 	Image DeathScreen, StartScreen;
 	boolean drawDeathScreen;
+	// Creates the start screen
 	boolean drawStartScreen = true;
+	// initialize all of the is touching variables for each enemy
 	boolean isTouching = false;
 	boolean isTouching1 = false;
 	boolean isTouching2 = false;
+	boolean isTouching3 = false;
+	boolean isTouching4 = false;
 
 	// Makes the window and connects it to the runner class
 	public void makeWindow() {
@@ -43,7 +47,7 @@ public class AdventureGameController extends BasicGame {
 
 	// Put the Game title here(Thats all)
 	public AdventureGameController() {
-		super("Adventure");
+		super("Adventure game");
 	}
 
 	// Draw Images Here or Animations
@@ -77,6 +81,14 @@ public class AdventureGameController extends BasicGame {
 			arg1.setColor(Color.red);
 			arg1.fillRect(EX2, EY2, 50, 50);
 
+			// Create Enemy4
+			arg1.setColor(Color.red);
+			arg1.fillRect(EX3, EY3, 50, 50);
+			
+			//create Enemy5
+			arg1.setColor(Color.red);
+			arg1.fillRect(EX4, EY4, 20, 20);
+
 			if (drawDeathScreen == true) {
 				DeathScreen.draw(0, 0);
 			}
@@ -105,103 +117,126 @@ public class AdventureGameController extends BasicGame {
 		// gets input from keyboard
 		Input input = arg0.getInput();
 
-		if(drawStartScreen == true)
-		{
-			if(input.isKeyDown(Input.KEY_ENTER))
-			{
-				drawStartScreen=false;
+		if (drawStartScreen == true) {
+			if (input.isKeyDown(Input.KEY_ENTER)) {
+				drawStartScreen = false;
 			}
 		}
-		
-		if(drawStartScreen==false)
-		{
-		// Moves enemy
-		moveX(PX);
-		moveY(PY);
 
-		// Moves enemy1
-		moveX1(PX);
-		moveY1(PY);
+		if (drawStartScreen == false) {
+			// Moves enemy
+			moveX(PX);
+			moveY(PY);
 
-		//Moves enemy2
-		moveX2(PX);
-		moveY2(PY);
-		
-		
+			// Moves enemy1
+			moveX1(PX);
+			moveY1(PY);
 
-		// Makes hitBox for Enemy
-		if (PX + 25 > EX && PX < EX + 50 && PY + 25 > EY && PY < EY + 50) {
-			isTouching = true;
-		} else {
-			isTouching = false;
-		}
+			// Moves enemy2
+			moveX2(PX);
+			moveY2(PY);
 
-		// Makes hitBox for Enemy1
-		if (PX + 25 > EX1 && PX < EX1 + 50 && PY + 25 > EY1 && PY < EY1 + 50) {
-			isTouching1 = true;
-		} else {
-			isTouching1 = false;
-		}
-		
-		//Makes hitBox for Enemy2
-		if (PX + 25 > EX2 && PX < EX2 + 50 && PY + 25 > EY2 && PY < EY2 + 50) {
-			isTouching2 = true;
-		} else {
-			isTouching2 = false;
-		}
-		
-		// Moves Player
-		if (drawDeathScreen != true) {
-			if (input.isKeyDown(Input.KEY_LEFT)) {
-				PX -= 7;
-			}
-			// moves player right
-			if (input.isKeyDown(Input.KEY_RIGHT)) {
-				PX += 7;
-			}
-			// moves player up
-			if (input.isKeyDown(Input.KEY_UP)) {
-				PY -= 7;
-			}
-			// moves player down
-			if (input.isKeyDown(Input.KEY_DOWN)) {
-				PY += 7;
-			}
+			// moves enemy3
+			moveX3(PX);
+			moveY3(PY);
 			
-		
-		}
-		
-		// creates borders
-		PX = tileBorder.borderHitBoxX(PX);
-		PY = tileBorder.borderHitBoxY(PY);
+			// Moves Enemy4
+			moveX4(PX);
+			moveY4(PY);
 
-		// If player touches Enemy
-		if (isTouching) {
-			drawDeathScreen = true;
-		}
-		//If player touches Enemy1
-		if (isTouching1) {
-			drawDeathScreen = true;
-		}
-		//If player touches Enemy2
-		if (isTouching2) {
-			drawDeathScreen = true;
-		}
-		
-		if (drawDeathScreen == true) {
-			EX = 0;
-			EY = 0;
-			EX1 = 940;
-			EY1 = 50;
-			EX2 = 500;
-			EY2 = 500;
-			if (input.isKeyDown(Input.KEY_SPACE)) {
-				drawDeathScreen = false;
-				PX = 270;
-				PY = 270;
+			// Makes hitBox for Enemy
+			if (PX + 25 > EX && PX < EX + 50 && PY + 25 > EY && PY < EY + 50) {
+				isTouching = true;
+			} else {
+				isTouching = false;
+			}
+
+			// Makes hitBox for Enemy1
+			if (PX + 25 > EX1 && PX < EX1 + 50 && PY + 25 > EY1 && PY < EY1 + 50) {
+				isTouching1 = true;
+			} else {
+				isTouching1 = false;
+			}
+
+			// Makes hitBox for Enemy2
+			if (PX + 25 > EX2 && PX < EX2 + 50 && PY + 25 > EY2 && PY < EY2 + 50) {
+				isTouching2 = true;
+			} else {
+				isTouching2 = false;
+			}
+			// Makes hitBox for Enemy3
+			if (PX + 25 > EX3 && PX < EX3 + 50 && PY + 25 > EY3 && PY < EY3 + 50) {
+				isTouching3 = true;
+			} else {
+				isTouching3 = false;
+			}
+			if (PX + 5 > EX4 && PX < EX4 + 15 && PY + 5 > EY4 && PY < EY4 + 15) {
+				isTouching4 = true;
+			} else {
+				isTouching4 = false;
+			}
+
+			// Moves Player
+			if (drawDeathScreen != true) {
+				if (input.isKeyDown(Input.KEY_LEFT)) {
+					PX -= 7;
+				}
+				// moves player right
+				if (input.isKeyDown(Input.KEY_RIGHT)) {
+					PX += 7;
+				}
+				// moves player up
+				if (input.isKeyDown(Input.KEY_UP)) {
+					PY -= 7;
+				}
+				// moves player down
+				if (input.isKeyDown(Input.KEY_DOWN)) {
+					PY += 7;
+				}
 
 			}
-		}
+
+			// creates borders
+			PX = tileBorder.borderHitBoxX(PX);
+			PY = tileBorder.borderHitBoxY(PY);
+
+			// If player touches Enemy
+			if (isTouching) {
+				drawDeathScreen = true;
+			}
+			// If player touches Enemy1
+			if (isTouching1) {
+				drawDeathScreen = true;
+			}
+			// If player touches Enemy2
+			if (isTouching2) {
+				drawDeathScreen = true;
+			}
+			if (isTouching3) {
+				drawDeathScreen = true;
+			}
+			if (isTouching4) {
+				drawDeathScreen = true;
+			}
+
+			if (drawDeathScreen == true) {
+				EX = 0;
+				EY = 0;
+				EX1 = 940;
+				EY1 = 50;
+				EX2 = 500;
+				EY2 = 500;
+				EX3 = 60;
+				EY3 = 560;
+				EX4 = 40;
+				EY4 = 40;
+				if (input.isKeyDown(Input.KEY_SPACE)) {
+					drawDeathScreen = false;
+					PX = 270;
+					PY = 270;
+
+				}
+			}
 		}
 
 	}
@@ -267,5 +302,43 @@ public class AdventureGameController extends BasicGame {
 			EY2 = EY2 + 3;
 		}
 		return EY2;
+	}
+
+	// Move Enemy3
+	public int moveX3(int PX) {
+		if (EX3 > PX) {
+			EX3 = EX3 - 4;
+		}
+		if (EX3 < PX) {
+			EX3 = EX3 + 4;
+		}
+		return EX3;
+	}
+
+	public int moveY3(int PY) {
+		if (EY3 > PY) {
+			EY3 = EY3 - 4;
+		}
+		if (EY3 < PY) {
+			EY3 = EY3 + 4;
+		}
+		return EY3;
+	}
+	//Move Enemy4
+	public int moveX4(int PX)
+	{
+		if(drawDeathScreen == false)
+		{
+			EX4 = EX4 + 7;
+		}
+		return EX4;
+	}
+	public int moveY4(int PY)
+	{
+		if(drawDeathScreen == false)
+		{
+			EY4 = EY4 + 7;
+		}
+		return EY4;
 	}
 }
