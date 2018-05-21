@@ -9,7 +9,7 @@ public class TileBorder
 	public void border(Graphics arg1, int StartX, int StartY, int BorderX, int BorderY )
 	{
 		//Sets rectangle color
-		arg1.setColor(Color.black);
+		arg1.setColor(Color.red);
 		//creates border
 		arg1.fillRect(StartX, StartY, BorderX, BorderY);
 	}

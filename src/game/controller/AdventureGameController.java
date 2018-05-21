@@ -82,7 +82,8 @@ public class AdventureGameController extends BasicGame {
 		}
 		if (drawStartScreen == false) {
 			// Creates the backGround color of the opening room
-			arg1.setColor(new Color(0, 100, 200));
+//			arg1.setColor(new Color(0, 100, 200));
+			arg1.setColor(Color.black);
 			// Creates the background object
 			arg1.fillRect(0, 0, 1000, 600);
 
@@ -275,7 +276,7 @@ public class AdventureGameController extends BasicGame {
 			if (isTouching5) {
 				drawDeathScreen = true;
 			}
-			if (secondsPassed >= 30) {
+			if (secondsPassed >= 15) {
 				drawWinScreen = true;
 			}
 
@@ -327,8 +328,7 @@ public class AdventureGameController extends BasicGame {
 					drawStartScreen = true;
 				}
 			}
-			if(drawStartScreen == true)
-			{
+			if (drawStartScreen == true) {
 				EX = 11111110;
 				EY = 11111110;
 				EX1 = 11111110;
@@ -346,7 +346,7 @@ public class AdventureGameController extends BasicGame {
 				secondsPassed = 0;
 				PX = 10;
 				PY = 10;
-				
+
 				if (input.isKeyDown(Input.KEY_ENTER)) {
 					drawDeathScreen = false;
 					PX = 270;
@@ -368,7 +368,7 @@ public class AdventureGameController extends BasicGame {
 					}
 					secondsPassed = 0;
 				}
-	
+
 			}
 		}
 	}
