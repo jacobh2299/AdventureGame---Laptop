@@ -15,8 +15,11 @@ public class AdventureGameController extends BasicGame {
 	// Initialize all of the data members
 
 	// Player
-	int PX = 270, PY = 270, EX = 0, EY = 0, EX1 = 930, EY1 = 50, EX2 = 500, EY2 = 500, EX3 = 60, EY3 = 560, EX4 = 40, EY4 = 40;
-
+	int PX = 270, PY = 270, EX = 0, EY = 0, EX1 = 930, EY1 = 50, EX2 = 500, EY2 = 500, EX3 = 60, EY3 = 560;
+	int bounceXV = 5;
+	int bounceYV = 5;
+	int EX4 = (int) (Math.random() * 980);
+	int EY4 = (int) (Math.random() * 540);
 	// Initialize Border
 	TileBorder tileBorder = new TileBorder();
 
@@ -87,7 +90,7 @@ public class AdventureGameController extends BasicGame {
 			
 			//create Enemy5
 			arg1.setColor(Color.red);
-			arg1.fillRect(EX4, EY4, 20, 20);
+			arg1.fillRect(EX4, EY4, 50, 50);
 
 			if (drawDeathScreen == true) {
 				DeathScreen.draw(0, 0);
@@ -124,22 +127,22 @@ public class AdventureGameController extends BasicGame {
 		}
 
 		if (drawStartScreen == false) {
-			// Moves enemy
-			moveX(PX);
-			moveY(PY);
-
-			// Moves enemy1
-			moveX1(PX);
-			moveY1(PY);
-
-			// Moves enemy2
-			moveX2(PX);
-			moveY2(PY);
-
-			// moves enemy3
-			moveX3(PX);
-			moveY3(PY);
-			
+//			// Moves enemy
+//			moveX(PX);
+//			moveY(PY);
+//
+//			// Moves enemy1
+//			moveX1(PX);
+//			moveY1(PY);
+//
+//			// Moves enemy2
+//			moveX2(PX);
+//			moveY2(PY);
+//
+//			// moves enemy3
+//			moveX3(PX);
+//			moveY3(PY);
+//			
 			// Moves Enemy4
 			moveX4(PX);
 			moveY4(PY);
@@ -170,7 +173,8 @@ public class AdventureGameController extends BasicGame {
 			} else {
 				isTouching3 = false;
 			}
-			if (PX + 5 > EX4 && PX < EX4 + 15 && PY + 5 > EY4 && PY < EY4 + 15) {
+			//Makes hitBox for Enemy4
+			if (PX + 25 > EX4 && PX < EX4 + 50 && PY + 25 > EY4 && PY < EY4 + 50) {
 				isTouching4 = true;
 			} else {
 				isTouching4 = false;
@@ -212,9 +216,11 @@ public class AdventureGameController extends BasicGame {
 			if (isTouching2) {
 				drawDeathScreen = true;
 			}
+			//If player touches Enemy3
 			if (isTouching3) {
 				drawDeathScreen = true;
 			}
+			//If player touches Enemy4
 			if (isTouching4) {
 				drawDeathScreen = true;
 			}
@@ -228,8 +234,8 @@ public class AdventureGameController extends BasicGame {
 				EY2 = 500;
 				EX3 = 60;
 				EY3 = 560;
-				EX4 = 40;
-				EY4 = 40;
+				EX4 = (int) (Math.random() * 980);
+				EY4 = (int) (Math.random() * 540);
 				if (input.isKeyDown(Input.KEY_SPACE)) {
 					drawDeathScreen = false;
 					PX = 270;
@@ -327,17 +333,25 @@ public class AdventureGameController extends BasicGame {
 	//Move Enemy4
 	public int moveX4(int PX)
 	{
+		if(EX4 > 950 || EX4 < 10)
+		{
+			bounceXV *= -1;
+		}
 		if(drawDeathScreen == false)
 		{
-			EX4 = EX4 + 7;
+			EX4 = EX4 + bounceXV;
 		}
 		return EX4;
 	}
 	public int moveY4(int PY)
 	{
+		if(EY4 > 550|| EY4 < 10)
+		{
+			bounceYV *= -1;
+		}
 		if(drawDeathScreen == false)
 		{
-			EY4 = EY4 + 7;
+			EY4 = EY4 + bounceYV;
 		}
 		return EY4;
 	}
