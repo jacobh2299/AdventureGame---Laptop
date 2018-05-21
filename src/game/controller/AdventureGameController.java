@@ -1,5 +1,10 @@
 package game.controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
@@ -30,7 +35,9 @@ public class AdventureGameController extends BasicGame {
 	int EY4 = (int) (Math.random() * 540);
 	int EX5 = (int) (Math.random() * 980);
 	int EY5 = (int) (Math.random() * 540);
-	
+	//Timer
+	int secondsPassed = 0;
+	int HighScore;
 	// Initialize Border
 	TileBorder tileBorder = new TileBorder();
 
@@ -68,7 +75,10 @@ public class AdventureGameController extends BasicGame {
 	// Draw Images Here or Animations
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
-
+		
+		
+		
+		
 		if (drawStartScreen == true) {
 			StartScreen.draw(0, 0);
 		}
@@ -120,6 +130,11 @@ public class AdventureGameController extends BasicGame {
 			tileBorder.border(arg1, 990, 0, 10, 600);
 			// creates bottom border
 			tileBorder.border(arg1, 0, 590, 1000, 10);
+
+			arg1.setColor(Color.white);
+			arg1.drawString("Timer: "+secondsPassed  + "", 10, 10);
+			arg1.setColor(Color.white);
+			arg1.drawString("Previous High Score: " + HighScore + "", 10, 30);
 		}
 	}
 
@@ -143,6 +158,10 @@ public class AdventureGameController extends BasicGame {
 		}
 
 		if (drawStartScreen == false) {
+			
+			Timer();
+			
+			
 			// Moves enemy
 			moveX(PX);
 			moveY(PY);
@@ -268,7 +287,11 @@ public class AdventureGameController extends BasicGame {
 				EY5 = (int) (Math.random() * 540);
 				EX3 = 60;
 				EY3 = 560;
-				
+				if(secondsPassed > HighScore)
+				{
+					HighScore = secondsPassed;
+				}
+				secondsPassed = 0;
 				if (input.isKeyDown(Input.KEY_SPACE)) {
 					drawDeathScreen = false;
 					PX = 270;
@@ -412,5 +435,28 @@ public class AdventureGameController extends BasicGame {
 				EY5 = EY5 + bounceYV1;
 			}
 			return EY5;
+		}
+		
+		
+		//Timer
+		public void Timer()
+		{
+			if(!drawStartScreen && !drawDeathScreen)
+			{
+				Timer timer = new Timer(2000, new ActionListener() {
+					public void actionPerformed(ActionEvent E)
+					{
+						secondsPassed++;
+						try {
+						Thread.sleep(1000);
+						}catch(Exception E1)
+						{
+							E1.printStackTrace();
+						}
+					}
+				});
+				timer.setRepeats(false);
+				timer.start();
+			}
 		}
 }
