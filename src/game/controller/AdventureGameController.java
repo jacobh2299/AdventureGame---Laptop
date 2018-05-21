@@ -275,7 +275,7 @@ public class AdventureGameController extends BasicGame {
 			if (isTouching5) {
 				drawDeathScreen = true;
 			}
-			if (secondsPassed >= 3) {
+			if (secondsPassed >= 30) {
 				drawWinScreen = true;
 			}
 
@@ -303,37 +303,74 @@ public class AdventureGameController extends BasicGame {
 
 				}
 
-				if (drawWinScreen == true) {
-					EX = 11111110;
-					EY = 11111110;
-					EX1 = 11111110;
-					EY1 = 11111110;
-					EX2 = 11111110;
-					EY2 = 11111110;
-					EX3 = 11111110;
-					EY3 = 11111110;
-					EX4 = 111111110;
-					EY4 = 1111110;
-					EX4 = 111111110;
-					EY4 = 111111110;
-					EX5 = 111111110;
-					EY5 = 111111110;
-					secondsPassed = 0;
-					PX = 10;
-					PY = 10;
-					if (input.isKeyDown(Input.KEY_ENTER)) {
-						drawDeathScreen = false;
-						drawWinScreen = false;
-						drawStartScreen = true;
-						
-
-					}
-
+			}
+			if (drawWinScreen == true) {
+				EX = 11111110;
+				EY = 11111110;
+				EX1 = 11111110;
+				EY1 = 11111110;
+				EX2 = 11111110;
+				EY2 = 11111110;
+				EX3 = 11111110;
+				EY3 = 11111110;
+				EX4 = 111111110;
+				EY4 = 1111110;
+				EX4 = 111111110;
+				EY4 = 111111110;
+				EX5 = 111111110;
+				EY5 = 111111110;
+				secondsPassed = 0;
+				PX = 10;
+				PY = 10;
+				if (input.isKeyDown(Input.KEY_ENTER)) {
+					drawWinScreen = false;
+					drawStartScreen = true;
 				}
-
+			}
+			if(drawStartScreen == true)
+			{
+				EX = 11111110;
+				EY = 11111110;
+				EX1 = 11111110;
+				EY1 = 11111110;
+				EX2 = 11111110;
+				EY2 = 11111110;
+				EX3 = 11111110;
+				EY3 = 11111110;
+				EX4 = 111111110;
+				EY4 = 1111110;
+				EX4 = 111111110;
+				EY4 = 111111110;
+				EX5 = 111111110;
+				EY5 = 111111110;
+				secondsPassed = 0;
+				PX = 10;
+				PY = 10;
+				
+				if (input.isKeyDown(Input.KEY_ENTER)) {
+					drawDeathScreen = false;
+					PX = 270;
+					PY = 270;
+					EX = (int) (Math.random() * 980);
+					EY = (int) (Math.random() * 540);
+					EX1 = (int) (Math.random() * 980);
+					EY1 = (int) (Math.random() * 540);
+					EX2 = (int) (Math.random() * 980);
+					EY2 = (int) (Math.random() * 540);
+					EX4 = (int) (Math.random() * 980);
+					EY4 = (int) (Math.random() * 540);
+					EX5 = (int) (Math.random() * 980);
+					EY5 = (int) (Math.random() * 540);
+					EX3 = 60;
+					EY3 = 560;
+					if (secondsPassed > HighScore) {
+						HighScore = secondsPassed;
+					}
+					secondsPassed = 0;
+				}
+	
 			}
 		}
-
 	}
 
 	// Moves Enemy
