@@ -35,15 +35,16 @@ public class AdventureGameController extends BasicGame {
 	int EY4 = (int) (Math.random() * 540);
 	int EX5 = (int) (Math.random() * 980);
 	int EY5 = (int) (Math.random() * 540);
-	//Timer
+	// Timer
 	int secondsPassed = 0;
 	int HighScore;
 	// Initialize Border
 	TileBorder tileBorder = new TileBorder();
 
 	// Create DeathScreen
-	Image DeathScreen, StartScreen;
+	Image DeathScreen, StartScreen, WinScreen;
 	boolean drawDeathScreen;
+	boolean drawWinScreen;
 	// Creates the start screen
 	boolean drawStartScreen = true;
 	// initialize all of the is touching variables for each enemy
@@ -69,16 +70,13 @@ public class AdventureGameController extends BasicGame {
 
 	// Put the Game title here(Thats all)
 	public AdventureGameController() {
-		super("Adventure game");
+		super("30 Seconds to Win");
 	}
 
 	// Draw Images Here or Animations
 	@Override
 	public void render(GameContainer arg0, Graphics arg1) throws SlickException {
-		
-		
-		
-		
+
 		if (drawStartScreen == true) {
 			StartScreen.draw(0, 0);
 		}
@@ -109,12 +107,12 @@ public class AdventureGameController extends BasicGame {
 			// Create Enemy4
 			arg1.setColor(Color.red);
 			arg1.fillRect(EX3, EY3, 50, 50);
-			
-			//create Enemy5
+
+			// create Enemy5
 			arg1.setColor(Color.red);
 			arg1.fillRect(EX4, EY4, 50, 50);
-			
-			//create Enemy6
+
+			// create Enemy6
 			arg1.setColor(Color.red);
 			arg1.fillRect(EX5, EY5, 50, 50);
 
@@ -132,9 +130,13 @@ public class AdventureGameController extends BasicGame {
 			tileBorder.border(arg1, 0, 590, 1000, 10);
 
 			arg1.setColor(Color.white);
-			arg1.drawString("Timer: "+secondsPassed  + "", 10, 10);
+			arg1.drawString("Timer: " + secondsPassed + "", 10, 10);
 			arg1.setColor(Color.white);
 			arg1.drawString("Previous High Score: " + HighScore + "", 10, 30);
+
+		}
+		if (drawWinScreen == true) {
+			WinScreen.draw(0, 0);
 		}
 	}
 
@@ -143,6 +145,7 @@ public class AdventureGameController extends BasicGame {
 	public void init(GameContainer arg0) throws SlickException {
 		DeathScreen = new Image("res/DeathScreen.png");
 		StartScreen = new Image("res/StartScreen.png");
+		WinScreen = new Image("res/WinScreen.png");
 	}
 
 	// Logic, Update, Actual Code (physics and gravity etc...)
@@ -158,10 +161,9 @@ public class AdventureGameController extends BasicGame {
 		}
 
 		if (drawStartScreen == false) {
-			
+
 			Timer();
-			
-			
+
 			// Moves enemy
 			moveX(PX);
 			moveY(PY);
@@ -177,14 +179,14 @@ public class AdventureGameController extends BasicGame {
 			// moves enemy3
 			moveX3(PX);
 			moveY3(PY);
-			
+
 			// Moves Enemy4
 			moveX4(PX);
 			moveY4(PY);
-			
+
 			// Moves Enemy5
-				moveX5(PX);
-				moveY5(PY);
+			moveX5(PX);
+			moveY5(PY);
 
 			// Makes hitBox for Enemy
 			if (PX + 25 > EX && PX < EX + 50 && PY + 25 > EY && PY < EY + 50) {
@@ -212,13 +214,13 @@ public class AdventureGameController extends BasicGame {
 			} else {
 				isTouching3 = false;
 			}
-			//Makes hitBox for Enemy4
+			// Makes hitBox for Enemy4
 			if (PX + 25 > EX4 && PX < EX4 + 50 && PY + 25 > EY4 && PY < EY4 + 50) {
 				isTouching4 = true;
 			} else {
 				isTouching4 = false;
 			}
-			//Makes hitBox for Enemy4
+			// Makes hitBox for Enemy4
 			if (PX + 25 > EX5 && PX < EX5 + 50 && PY + 25 > EY5 && PY < EY5 + 50) {
 				isTouching5 = true;
 			} else {
@@ -261,17 +263,20 @@ public class AdventureGameController extends BasicGame {
 			if (isTouching2) {
 				drawDeathScreen = true;
 			}
-			//If player touches Enemy3
+			// If player touches Enemy3
 			if (isTouching3) {
 				drawDeathScreen = true;
 			}
-			//If player touches Enemy4
+			// If player touches Enemy4
 			if (isTouching4) {
 				drawDeathScreen = true;
 			}
-			//If player touches Enemy5
+			// If player touches Enemy5
 			if (isTouching5) {
 				drawDeathScreen = true;
+			}
+			if (secondsPassed >= 3) {
+				drawWinScreen = true;
 			}
 
 			if (drawDeathScreen == true) {
@@ -287,8 +292,7 @@ public class AdventureGameController extends BasicGame {
 				EY5 = (int) (Math.random() * 540);
 				EX3 = 60;
 				EY3 = 560;
-				if(secondsPassed > HighScore)
-				{
+				if (secondsPassed > HighScore) {
 					HighScore = secondsPassed;
 				}
 				secondsPassed = 0;
@@ -298,6 +302,35 @@ public class AdventureGameController extends BasicGame {
 					PY = 270;
 
 				}
+
+				if (drawWinScreen == true) {
+					EX = 11111110;
+					EY = 11111110;
+					EX1 = 11111110;
+					EY1 = 11111110;
+					EX2 = 11111110;
+					EY2 = 11111110;
+					EX3 = 11111110;
+					EY3 = 11111110;
+					EX4 = 111111110;
+					EY4 = 1111110;
+					EX4 = 111111110;
+					EY4 = 111111110;
+					EX5 = 111111110;
+					EY5 = 111111110;
+					secondsPassed = 0;
+					PX = 10;
+					PY = 10;
+					if (input.isKeyDown(Input.KEY_ENTER)) {
+						drawDeathScreen = false;
+						drawWinScreen = false;
+						drawStartScreen = true;
+						
+
+					}
+
+				}
+
 			}
 		}
 
@@ -386,77 +419,64 @@ public class AdventureGameController extends BasicGame {
 		}
 		return EY3;
 	}
-	//Move Enemy4
-	public int moveX4(int PX)
-	{
-		if(EX4 > 950 || EX4 < 10)
-		{
+
+	// Move Enemy4
+	public int moveX4(int PX) {
+		if (EX4 > 950 || EX4 < 10) {
 			bounceXV *= -1;
 		}
-		if(drawDeathScreen == false)
-		{
+		if (drawDeathScreen == false) {
 			EX4 = EX4 + bounceXV;
 		}
 		return EX4;
 	}
-	public int moveY4(int PY)
-	{
-		if(EY4 > 550|| EY4 < 10)
-		{
+
+	public int moveY4(int PY) {
+		if (EY4 > 550 || EY4 < 10) {
 			bounceYV *= -1;
 		}
-		if(drawDeathScreen == false)
-		{
+		if (drawDeathScreen == false) {
 			EY4 = EY4 + bounceYV;
 		}
 		return EY4;
 	}
-	//Move Enemy5
-		public int moveX5(int PX)
-		{
-			if(EX5 > 950 || EX5 < 10)
-			{
-				bounceXV1 *= -1;
-			}
-			if(drawDeathScreen == false)
-			{
-				EX5 = EX5 + bounceXV1;
-			}
-			return EX5;
+
+	// Move Enemy5
+	public int moveX5(int PX) {
+		if (EX5 > 950 || EX5 < 10) {
+			bounceXV1 *= -1;
 		}
-		public int moveY5(int PY)
-		{
-			if(EY5 > 550|| EY5 < 10)
-			{
-				bounceYV1 *= -1;
-			}
-			if(drawDeathScreen == false)
-			{
-				EY5 = EY5 + bounceYV1;
-			}
-			return EY5;
+		if (drawDeathScreen == false) {
+			EX5 = EX5 + bounceXV1;
 		}
-		
-		
-		//Timer
-		public void Timer()
-		{
-			if(!drawStartScreen && !drawDeathScreen)
-			{
-				Timer timer = new Timer(2000, new ActionListener() {
-					public void actionPerformed(ActionEvent E)
-					{
-						secondsPassed++;
-						try {
+		return EX5;
+	}
+
+	public int moveY5(int PY) {
+		if (EY5 > 550 || EY5 < 10) {
+			bounceYV1 *= -1;
+		}
+		if (drawDeathScreen == false) {
+			EY5 = EY5 + bounceYV1;
+		}
+		return EY5;
+	}
+
+	// Timer
+	public void Timer() {
+		if (!drawStartScreen && !drawDeathScreen) {
+			Timer timer = new Timer(2000, new ActionListener() {
+				public void actionPerformed(ActionEvent E) {
+					secondsPassed++;
+					try {
 						Thread.sleep(1000);
-						}catch(Exception E1)
-						{
-							E1.printStackTrace();
-						}
+					} catch (Exception E1) {
+						E1.printStackTrace();
 					}
-				});
-				timer.setRepeats(false);
-				timer.start();
-			}
+				}
+			});
+			timer.setRepeats(false);
+			timer.start();
 		}
+	}
 }
